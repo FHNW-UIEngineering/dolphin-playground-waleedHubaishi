@@ -22,9 +22,9 @@ public class MyAppView extends Application implements BasePmMixin {
     @Override
     public void start(Stage stage) throws Exception {
         clientDolphin.send(BasicCommands.INITIALIZE_BASE_PMS,
-             $ -> buildUI(stage));
+                $ -> buildUI(stage));
         clientDolphin.send(BasicCommands.INITIALIZE_CONTROLLER,
-             $ -> clientDolphin.send(PersonCommands.LOAD_SOME_PERSON));
+                $ -> clientDolphin.send(PersonCommands.LOAD_SOME_PERSON));
     }
 
     private void buildUI(Stage stage) {

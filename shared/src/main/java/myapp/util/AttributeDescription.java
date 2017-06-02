@@ -11,6 +11,7 @@ public interface AttributeDescription {
     ValueType getValueType();
 
     String name();
+    System.out.print();
 
     default String qualifier(long entityId){
         return getPMDescription().getEntityName() + "." + name() + ":" + entityId;
