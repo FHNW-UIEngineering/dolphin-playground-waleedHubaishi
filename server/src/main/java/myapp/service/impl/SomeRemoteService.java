@@ -18,6 +18,10 @@ public class SomeRemoteService implements SomeService, DTOMixin {
                       "John Young"     , "Thomas Mattingly", "Charles Duke",      // Apollo 16
                       "Eugene Cernan"  , "Ronald Evans"    , "Harrison Schmitt"}; // Apollo 17
 
+    String[] mountains= {
+            "0","Albis, Bürglen","916.0","Hauptgipfel","Mittelland","Albiskette","12.0","Wilerberg","376.0",
+            "Sihlbrugg Punkt 540","Albiskette vom Uetliberg"};
+
     @Override
     public DTO loadSomeEntity() {
         long id = createNewId();
