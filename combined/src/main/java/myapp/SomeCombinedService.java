@@ -17,10 +17,6 @@ public class SomeCombinedService implements SomeService, DTOMixin {
                       "James McDivitt", "David Scott" , "Russel Schweickart", // Apollo 9
                       "Tom Stafford"  , "John Young"  , "Eugene Cernan"};     // Apollo 10
 
-    String[] mountains= {
-            "0","Albis, Bürglen","916.0","Hauptgipfel","Mittelland","Albiskette","12.0","Wilerberg","376.0",
-            "Sihlbrugg Punkt 540","Albiskette vom Uetliberg"};
-
     @Override
     public DTO loadSomeEntity() {
         long id = createNewId();
