@@ -1,6 +1,5 @@
 package myapp.presentationmodel;
 
-import myapp.presentationmodel.person.Mountain;
 import org.opendolphin.core.BasePresentationModel;
 import org.opendolphin.core.Dolphin;
 
@@ -12,26 +11,15 @@ import myapp.presentationmodel.presentationstate.ApplicationState;
  */
 public interface BasePmMixin {
     //todo: for all your basePMs (as delivered by your Controllers) specify constants and getter-methods like these
-    String MOUNTAIN_PROXY_ID = PMDescription.Mountain.pmId(-777L);
+    String PERSON_PROXY_PM_ID = PMDescription.PERSON.pmId(-777L);
 
-    default BasePresentationModel getMountainProxyPM() {
-        return (BasePresentationModel) getDolphin().getAt(MOUNTAIN_PROXY_ID);
+    default BasePresentationModel getPersonProxyPM() {
+        return (BasePresentationModel) getDolphin().getAt(PERSON_PROXY_PM_ID);
     }
 
-    default Mountain getMountainProxy() {
-        return new Mountain(getMountainProxyPM());
+    default Person getPersonProxy() {
+        return new Person(getPersonProxyPM());
     }
-
-//    //todo: for all your basePMs (as delivered by your Controllers) specify constants and getter-methods like these
-//    String PERSON_PROXY_PM_ID = PMDescription.PERSON.pmId(-777L);
-//
-//    default BasePresentationModel getPersonProxyPM() {
-//        return (BasePresentationModel) getDolphin().getAt(PERSON_PROXY_PM_ID);
-//    }
-//
-//    default Person getPersonProxy() {
-//        return new Person(getPersonProxyPM());
-//    }
 
     // always needed
     String APPLICATION_STATE_PM_ID = PMDescription.APPLICATION_STATE.pmId(-888);
