@@ -5,17 +5,15 @@ import myapp.util.AttributeDescription;
 import myapp.util.ValueType;
 
 /**
- * todo: Describe all your application specific PresentationModel-Attributes like this
+ * Created by Julien on 14.06.2017.
  */
-public enum PersonAtt implements AttributeDescription {
-    ID(ValueType.ID),
-    NAME(ValueType.STRING),
-    AGE(ValueType.INT),
-    IS_ADULT(ValueType.BOOLEAN);
-
+public enum MountainAtt implements AttributeDescription {
+    MOUNTAIN_ID(ValueType.ID),
+    MOUNTAIN_NAME(ValueType.STRING),
+    MOUNTAIN_HEIGHT(ValueType.STRING);
     private final ValueType valueType;
 
-    PersonAtt(ValueType type) {
+    MountainAtt(ValueType type) {
         valueType = type;
     }
 
@@ -26,6 +24,6 @@ public enum PersonAtt implements AttributeDescription {
 
     @Override
     public PMDescription getPMDescription() {
-        return PMDescription.PERSON;
+        return PMDescription.MOUNTAIN;
     }
 }

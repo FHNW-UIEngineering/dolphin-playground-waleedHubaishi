@@ -3,9 +3,9 @@ package myapp.service.impl;
 import java.util.List;
 import java.util.Random;
 
+import myapp.presentationmodel.person.MountainAtt;
 import org.opendolphin.core.server.DTO;
 
-import myapp.presentationmodel.person.PersonAtt;
 import myapp.service.SomeService;
 import myapp.util.DTOMixin;
 
@@ -25,15 +25,12 @@ public class SomeRemoteService implements SomeService, DTOMixin {
     @Override
     public DTO loadSomeEntity() {
         long id = createNewId();
-
         Random r        = new Random();
-        String name     = names[r.nextInt(names.length)];
-        int    age      = r.nextInt(43);
-        boolean isAdult = age >= 18;
-        return new DTO(createSlot(PersonAtt.ID      , id     , id),
-                       createSlot(PersonAtt.NAME    , name   , id),
-                       createSlot(PersonAtt.AGE     , age    , id),
-                       createSlot(PersonAtt.IS_ADULT, isAdult, id));
+        String mountainName     = mountains[r.nextInt(mountains.length)];
+        int    height      = r.nextInt(43);
+        return new DTO(createSlot(MountainAtt.MOUNTAIN_ID, id     , id),
+                createSlot(MountainAtt.MOUNTAIN_NAME, mountainName   , id),
+                createSlot(MountainAtt.MOUNTAIN_HEIGHT, height    , id));
     }
 
     @Override
