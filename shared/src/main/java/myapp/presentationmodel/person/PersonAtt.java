@@ -24,8 +24,8 @@ public enum PersonAtt implements AttributeDescription {
         return valueType;
     }
 
-    @Override
-    public PMDescription getPMDescription() {
-        return PMDescription.PERSON;
-    }
+//    @Override
+//    public PMDescription getPMDescription() {
+//        return PMDescription.PERSON;
+//    }
 }
