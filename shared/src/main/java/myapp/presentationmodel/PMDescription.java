@@ -1,7 +1,6 @@
 package myapp.presentationmodel;
 
 import myapp.presentationmodel.person.MountainAtt;
-import myapp.presentationmodel.person.PersonAtt;
 import myapp.presentationmodel.presentationstate.ApplicationStateAtt;
 import myapp.util.AttributeDescription;
 

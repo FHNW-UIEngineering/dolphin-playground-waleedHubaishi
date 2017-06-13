@@ -2,28 +2,14 @@ package myapp;
 
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-
-import org.opendolphin.binding.Converter;
-import org.opendolphin.binding.JFXBinder;
-import org.opendolphin.core.Attribute;
-import org.opendolphin.core.Dolphin;
-import org.opendolphin.core.PresentationModel;
-import org.opendolphin.core.Tag;
-import org.opendolphin.core.client.ClientDolphin;
-import org.opendolphin.core.client.ClientPresentationModel;
-
 import myapp.presentationmodel.BasePmMixin;
-import myapp.presentationmodel.person.Person;
-import myapp.presentationmodel.person.PersonAtt;
+import myapp.presentationmodel.person.Mountain;
+import myapp.presentationmodel.person.MountainAtt;
 import myapp.presentationmodel.person.PersonCommands;
 import myapp.presentationmodel.presentationstate.ApplicationState;
 import myapp.presentationmodel.presentationstate.ApplicationStateAtt;
@@ -32,6 +18,14 @@ import myapp.util.Language;
 import myapp.util.ViewMixin;
 import myapp.util.veneer.AttributeFX;
 import myapp.util.veneer.BooleanAttributeFX;
+import org.opendolphin.binding.Converter;
+import org.opendolphin.binding.JFXBinder;
+import org.opendolphin.core.Attribute;
+import org.opendolphin.core.Dolphin;
+import org.opendolphin.core.PresentationModel;
+import org.opendolphin.core.Tag;
+import org.opendolphin.core.client.ClientDolphin;
+import org.opendolphin.core.client.ClientPresentationModel;
 
 /**
  * Implementation of the view details, event handling, and binding.
@@ -57,11 +51,9 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
     private Label     nameLabel;
     private TextField nameField;
 
-    private Label     ageLabel;
-    private TextField ageField;
+    private Label     heightLabel;
+    private TextField heightField;
 
-    private Label    isAdultLabel;
-    private CheckBox isAdultCheckBox;
 
     private Button saveButton;
     private Button resetButton;
@@ -69,7 +61,7 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
     private Button germanButton;
     private Button englishButton;
 
-    private final Person personProxy;
+    private final Mountain mountainProxy;
 
     //always needed
     private final ApplicationState ps;
@@ -77,7 +69,7 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
     RootPane(ClientDolphin clientDolphin) {
         this.clientDolphin = clientDolphin;
         ps = getApplicationState();
-        personProxy = getPersonProxy();
+        mountainProxy = getMountainProxy();
 
         init();
     }
@@ -104,11 +96,9 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         nameLabel = new Label();
         nameField = new TextField();
 
-        ageLabel = new Label();
-        ageField = new TextField();
+        heightLabel = new Label();
+        heightField = new TextField();
 
-        isAdultLabel    = new Label();
-        isAdultCheckBox = new CheckBox();
 
         saveButton    = new Button("Save");
         resetButton   = new Button("Reset");
@@ -130,10 +120,8 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         add(idField        , 1, 1, 4, 1);
         add(nameLabel      , 0, 2);
         add(nameField      , 1, 2, 4, 1);
-        add(ageLabel       , 0, 3);
-        add(ageField       , 1, 3, 4, 1);
-        add(isAdultLabel   , 0, 4);
-        add(isAdultCheckBox, 1, 4, 4, 1);
+        add(headerLabel       , 0, 3);
+        add(heightField       , 1, 3, 4, 1);
         add(new HBox(5, saveButton, resetButton, nextButton, germanButton, englishButton), 0, 5, 5, 1);
     }
 
@@ -153,17 +141,14 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
 
     @Override
     public void setupValueChangedListeners() {
-        personProxy.name.dirtyProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , DIRTY_STYLE, newValue));
-        personProxy.age.dirtyProperty().addListener((observable, oldValue, newValue)     -> updateStyle(ageField       , DIRTY_STYLE, newValue));
-        personProxy.isAdult.dirtyProperty().addListener((observable, oldValue, newValue) -> updateStyle(isAdultCheckBox, DIRTY_STYLE, newValue));
+        mountainProxy.mountainName.dirtyProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , DIRTY_STYLE, newValue));
+        mountainProxy.mountainHeight.dirtyProperty().addListener((observable, oldValue, newValue)     -> updateStyle(heightField       , DIRTY_STYLE, newValue));
 
-        personProxy.name.validProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , INVALID_STYLE, !newValue));
-        personProxy.age.validProperty().addListener((observable, oldValue, newValue)     -> updateStyle(ageField       , INVALID_STYLE, !newValue));
-        personProxy.isAdult.validProperty().addListener((observable, oldValue, newValue) -> updateStyle(isAdultCheckBox, INVALID_STYLE, !newValue));
+        mountainProxy.mountainName.validProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , INVALID_STYLE, !newValue));
+        mountainProxy.mountainHeight.validProperty().addListener((observable, oldValue, newValue)     -> updateStyle(heightField       , INVALID_STYLE, !newValue));
 
-        personProxy.name.mandatoryProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , MANDATORY_STYLE, newValue));
-        personProxy.age.mandatoryProperty().addListener((observable, oldValue, newValue)     -> updateStyle(ageField       , MANDATORY_STYLE, newValue));
-        personProxy.isAdult.mandatoryProperty().addListener((observable, oldValue, newValue) -> updateStyle(isAdultCheckBox, MANDATORY_STYLE, newValue));
+        mountainProxy.mountainName.mandatoryProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , MANDATORY_STYLE, newValue));
+        mountainProxy.mountainHeight.mandatoryProperty().addListener((observable, oldValue, newValue)     -> updateStyle(heightField       , MANDATORY_STYLE, newValue));
     }
 
     @Override
@@ -174,49 +159,45 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
 
     private void setupBindings_DolphinBased() {
         // you can fetch all existing PMs from the modelstore via clientDolphin
-        ClientPresentationModel personProxyPM = clientDolphin.getAt(BasePmMixin.PERSON_PROXY_PM_ID);
+        ClientPresentationModel mountainProxyPM = clientDolphin.getAt(BasePmMixin.MOUNTAIN_PROXY_PM_ID);
 
         //JFXBinder is ui toolkit agnostic. We have to use Strings
-        JFXBinder.bind(PersonAtt.NAME.name())
-                 .of(personProxyPM)
-                 .using(value -> value + ", " + personProxyPM.getAt(PersonAtt.AGE.name()).getValue())
+        JFXBinder.bind(MountainAtt.MOUNTAIN_NAME.name())
+                 .of(mountainProxyPM)
+                 .using(value -> value + ", " + mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name()).getValue())
                  .to("text")
                  .of(headerLabel);
 
-        JFXBinder.bind(PersonAtt.AGE.name())
-                 .of(personProxyPM)
-                 .using(value -> personProxyPM.getAt(PersonAtt.NAME.name()).getValue() + ", " + value)
+        JFXBinder.bind(MountainAtt.MOUNTAIN_HEIGHT.name())
+                 .of(mountainProxyPM)
+                 .using(value -> mountainProxyPM.getAt(MountainAtt.MOUNTAIN_NAME.name()).getValue() + ", " + value)
                  .to("text")
                  .of(headerLabel);
 
-        JFXBinder.bind(PersonAtt.NAME.name(), Tag.LABEL).of(personProxyPM).to("text").of(nameLabel);
-        JFXBinder.bind(PersonAtt.NAME.name()).of(personProxyPM).to("text").of(nameField);
-        JFXBinder.bind("text").of(nameField).to(PersonAtt.NAME.name()).of(personProxyPM);
+        JFXBinder.bind(MountainAtt.MOUNTAIN_NAME.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(nameLabel);
+        JFXBinder.bind(MountainAtt.MOUNTAIN_NAME.name()).of(mountainProxyPM).to("text").of(nameField);
+        JFXBinder.bind("text").of(nameField).to(MountainAtt.MOUNTAIN_NAME.name()).of(mountainProxyPM);
 
-        JFXBinder.bind(PersonAtt.AGE.name(), Tag.LABEL).of(personProxyPM).to("text").of(ageLabel);
-        JFXBinder.bind(PersonAtt.AGE.name()).of(personProxyPM).to("text").of(ageField);
+        JFXBinder.bind(MountainAtt.MOUNTAIN_HEIGHT.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(heightLabel);
+        JFXBinder.bind(MountainAtt.MOUNTAIN_HEIGHT.name()).of(mountainProxyPM).to("text").of(heightField);
         Converter toIntConverter = value -> {
             try {
                 int newValue = Integer.parseInt(value.toString());
-                personProxyPM.getAt(PersonAtt.AGE.name(), AdditionalTag.VALID).setValue(true);
-                personProxyPM.getAt(PersonAtt.AGE.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("OK");
+                mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name(), AdditionalTag.VALID).setValue(true);
+                mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("OK");
 
                 return newValue;
             } catch (NumberFormatException e) {
-                personProxyPM.getAt(PersonAtt.AGE.name(), AdditionalTag.VALID).setValue(false);
-                personProxyPM.getAt(PersonAtt.AGE.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("Not a number");
-                return personProxyPM.getAt(PersonAtt.AGE.name()).getValue();
+                mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name(), AdditionalTag.VALID).setValue(false);
+                mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("Not a number");
+                return mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name()).getValue();
             }
         };
-        JFXBinder.bind("text").of(ageField).using(toIntConverter).to(PersonAtt.AGE.name()).of(personProxyPM);
-
-        JFXBinder.bind(PersonAtt.IS_ADULT.name(), Tag.LABEL).of(personProxyPM).to("text").of(isAdultLabel);
-        JFXBinder.bind(PersonAtt.IS_ADULT.name()).of(personProxyPM).to("selected").of(isAdultCheckBox);
-        JFXBinder.bind("selected").of(isAdultCheckBox).to(PersonAtt.IS_ADULT.name()).of(personProxyPM);
+        JFXBinder.bind("text").of(heightField).using(toIntConverter).to(MountainAtt.MOUNTAIN_HEIGHT.name()).of(mountainProxyPM);
 
         Converter not = value -> !(boolean) value;
-        JFXBinder.bindInfo(Attribute.DIRTY_PROPERTY).of(personProxyPM).using(not).to("disable").of(saveButton);
-        JFXBinder.bindInfo(Attribute.DIRTY_PROPERTY).of(personProxyPM).using(not).to("disable").of(resetButton);
+        JFXBinder.bindInfo(Attribute.DIRTY_PROPERTY).of(mountainProxyPM).using(not).to("disable").of(saveButton);
+        JFXBinder.bindInfo(Attribute.DIRTY_PROPERTY).of(mountainProxyPM).using(not).to("disable").of(resetButton);
 
         PresentationModel presentationStatePM = clientDolphin.getAt(BasePmMixin.APPLICATION_STATE_PM_ID);
 
@@ -225,20 +206,19 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
     }
 
     private void setupBindings_VeneerBased(){
-        headerLabel.textProperty().bind(personProxy.name.valueProperty().concat(", ").concat(personProxy.age.valueProperty()));
+        headerLabel.textProperty().bind(mountainProxy.mountainName.valueProperty().concat(", ").concat(mountainProxy.mountainHeight.valueProperty()));
 
-        idLabel.textProperty().bind(personProxy.id.labelProperty());
-        idField.textProperty().bind(personProxy.id.valueProperty().asString());
+        idLabel.textProperty().bind(mountainProxy.mountainId.labelProperty());
+        idField.textProperty().bind(mountainProxy.mountainId.valueProperty().asString());
 
-        setupBinding(nameLabel   , nameField      , personProxy.name);
-        setupBinding(ageLabel    , ageField       , personProxy.age);
-        setupBinding(isAdultLabel, isAdultCheckBox, personProxy.isAdult);
+        setupBinding(nameLabel   , nameField      , mountainProxy.mountainName);
+        setupBinding(heightLabel    , heightField       , mountainProxy.mountainHeight);
 
         germanButton.disableProperty().bind(Bindings.createBooleanBinding(() -> Language.GERMAN.equals(ps.language.getValue()), ps.language.valueProperty()));
         englishButton.disableProperty().bind(Bindings.createBooleanBinding(() -> Language.ENGLISH.equals(ps.language.getValue()), ps.language.valueProperty()));
 
-        saveButton.disableProperty().bind(personProxy.dirtyProperty().not());
-        resetButton.disableProperty().bind(personProxy.dirtyProperty().not());
+        saveButton.disableProperty().bind(mountainProxy.dirtyProperty().not());
+        resetButton.disableProperty().bind(mountainProxy.dirtyProperty().not());
     }
 
     private void setupBinding(Label label, TextField field, AttributeFX attribute) {

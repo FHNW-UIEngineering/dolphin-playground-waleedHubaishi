@@ -1,12 +1,9 @@
 package myapp.presentationmodel;
 
 import myapp.presentationmodel.person.Mountain;
-import org.jcp.xml.dsig.internal.MacOutputStream;
+import myapp.presentationmodel.presentationstate.ApplicationState;
 import org.opendolphin.core.BasePresentationModel;
 import org.opendolphin.core.Dolphin;
-
-import myapp.presentationmodel.person.Person;
-import myapp.presentationmodel.presentationstate.ApplicationState;
 
 /**
  * @author Dieter Holz
