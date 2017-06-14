@@ -10,7 +10,7 @@ import javafx.scene.layout.Priority;
 import myapp.presentationmodel.BasePmMixin;
 import myapp.presentationmodel.person.Mountain;
 import myapp.presentationmodel.person.MountainAtt;
-import myapp.presentationmodel.person.PersonCommands;
+import myapp.presentationmodel.person.MountainCommands;
 import myapp.presentationmodel.presentationstate.ApplicationState;
 import myapp.presentationmodel.presentationstate.ApplicationStateAtt;
 import myapp.util.AdditionalTag;
@@ -131,9 +131,9 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         // or set a value on an Attribute
 
         ApplicationState ps = getApplicationState();
-        saveButton.setOnAction(   $ -> clientDolphin.send(PersonCommands.SAVE));
-        resetButton.setOnAction(  $ -> clientDolphin.send(PersonCommands.RESET));
-        nextButton.setOnAction(   $ -> clientDolphin.send(PersonCommands.LOAD_SOME_PERSON));
+        saveButton.setOnAction(   $ -> clientDolphin.send(MountainCommands.SAVE));
+        resetButton.setOnAction(  $ -> clientDolphin.send(MountainCommands.RESET));
+        nextButton.setOnAction(   $ -> clientDolphin.send(MountainCommands.LOAD_SOME_MOUNTAINS));
 
         germanButton.setOnAction( $ -> ps.language.setValue(Language.GERMAN));
         englishButton.setOnAction($ -> ps.language.setValue(Language.ENGLISH));
@@ -162,38 +162,38 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         ClientPresentationModel mountainProxyPM = clientDolphin.getAt(BasePmMixin.MOUNTAIN_PROXY_PM_ID);
 
         //JFXBinder is ui toolkit agnostic. We have to use Strings
-        JFXBinder.bind(MountainAtt.MOUNTAIN_NAME.name())
+        JFXBinder.bind(MountainAtt.MOUNTAINNAME.name())
                  .of(mountainProxyPM)
-                 .using(value -> value + ", " + mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name()).getValue())
+                 .using(value -> value + ", " + mountainProxyPM.getAt(MountainAtt.MOUNTAINHEIGHT.name()).getValue())
                  .to("text")
                  .of(headerLabel);
 
-        JFXBinder.bind(MountainAtt.MOUNTAIN_HEIGHT.name())
+        JFXBinder.bind(MountainAtt.MOUNTAINHEIGHT.name())
                  .of(mountainProxyPM)
-                 .using(value -> mountainProxyPM.getAt(MountainAtt.MOUNTAIN_NAME.name()).getValue() + ", " + value)
+                 .using(value -> mountainProxyPM.getAt(MountainAtt.MOUNTAINNAME.name()).getValue() + ", " + value)
                  .to("text")
                  .of(headerLabel);
 
-        JFXBinder.bind(MountainAtt.MOUNTAIN_NAME.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(nameLabel);
-        JFXBinder.bind(MountainAtt.MOUNTAIN_NAME.name()).of(mountainProxyPM).to("text").of(nameField);
-        JFXBinder.bind("text").of(nameField).to(MountainAtt.MOUNTAIN_NAME.name()).of(mountainProxyPM);
+        JFXBinder.bind(MountainAtt.MOUNTAINNAME.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(nameLabel);
+        JFXBinder.bind(MountainAtt.MOUNTAINNAME.name()).of(mountainProxyPM).to("text").of(nameField);
+        JFXBinder.bind("text").of(nameField).to(MountainAtt.MOUNTAINNAME.name()).of(mountainProxyPM);
 
-        JFXBinder.bind(MountainAtt.MOUNTAIN_HEIGHT.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(heightLabel);
-        JFXBinder.bind(MountainAtt.MOUNTAIN_HEIGHT.name()).of(mountainProxyPM).to("text").of(heightField);
+        JFXBinder.bind(MountainAtt.MOUNTAINHEIGHT.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(heightLabel);
+        JFXBinder.bind(MountainAtt.MOUNTAINHEIGHT.name()).of(mountainProxyPM).to("text").of(heightField);
         Converter toIntConverter = value -> {
             try {
                 int newValue = Integer.parseInt(value.toString());
-                mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name(), AdditionalTag.VALID).setValue(true);
-                mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("OK");
+                mountainProxyPM.getAt(MountainAtt.MOUNTAINHEIGHT.name(), AdditionalTag.VALID).setValue(true);
+                mountainProxyPM.getAt(MountainAtt.MOUNTAINHEIGHT.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("OK");
 
                 return newValue;
             } catch (NumberFormatException e) {
-                mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name(), AdditionalTag.VALID).setValue(false);
-                mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("Not a number");
-                return mountainProxyPM.getAt(MountainAtt.MOUNTAIN_HEIGHT.name()).getValue();
+                mountainProxyPM.getAt(MountainAtt.MOUNTAINHEIGHT.name(), AdditionalTag.VALID).setValue(false);
+                mountainProxyPM.getAt(MountainAtt.MOUNTAINHEIGHT.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("Not a number");
+                return mountainProxyPM.getAt(MountainAtt.MOUNTAINHEIGHT.name()).getValue();
             }
         };
-        JFXBinder.bind("text").of(heightField).using(toIntConverter).to(MountainAtt.MOUNTAIN_HEIGHT.name()).of(mountainProxyPM);
+        JFXBinder.bind("text").of(heightField).using(toIntConverter).to(MountainAtt.MOUNTAINHEIGHT.name()).of(mountainProxyPM);
 
         Converter not = value -> !(boolean) value;
         JFXBinder.bindInfo(Attribute.DIRTY_PROPERTY).of(mountainProxyPM).using(not).to("disable").of(saveButton);

@@ -11,9 +11,11 @@ import java.util.Random;
 public class SomeRemoteService implements SomeService, DTOMixin {
 
 
-    String[] mountains= {
-            "0","Albis, Bürglen","916.0","Hauptgipfel","Mittelland","Albiskette","12.0","Wilerberg","376.0",
-            "Sihlbrugg Punkt 540","Albiskette vom Uetliberg"};
+//    String[] mountains= {
+//            "0","Albis, Bürglen","916.0","Hauptgipfel","Mittelland","Albiskette","12.0","Wilerberg","376.0",
+//            "Sihlbrugg Punkt 540","Albiskette vom Uetliberg"};
+    String[] mountains= {"Üetliberg","Matterhorn", "Mont Blanc",
+                         "Mount Everest", "Albiskette"};
 
     @Override
     public DTO loadSomeEntity() {
@@ -21,9 +23,11 @@ public class SomeRemoteService implements SomeService, DTOMixin {
         Random r        = new Random();
         String mountainName     = mountains[r.nextInt(mountains.length)];
         int    height      = r.nextInt(43);
-        return new DTO(createSlot(MountainAtt.MOUNTAIN_ID, id     , id),
-                createSlot(MountainAtt.MOUNTAIN_NAME, mountainName   , id),
-                createSlot(MountainAtt.MOUNTAIN_HEIGHT, height    , id));
+        String language = "german";
+        return new DTO(createSlot(MountainAtt.MOUNTAINID, id     , id),
+                createSlot(MountainAtt.MOUNTAINNAME, mountainName   , id),
+                createSlot(MountainAtt.MOUNTAINHEIGHT, height    , id),
+                createSlot(MountainAtt.LANGUAGE, language    , id));
     }
 
     @Override

@@ -20,9 +20,11 @@ public class SomeCombinedService implements SomeService, DTOMixin {
         Random r        = new Random();
         String mountainName     = mountains[r.nextInt(mountains.length)];
         int    height      = r.nextInt(43);
-        return new DTO(createSlot(MountainAtt.MOUNTAIN_ID, id     , id),
-                createSlot(MountainAtt.MOUNTAIN_NAME, mountainName   , id),
-                createSlot(MountainAtt.MOUNTAIN_HEIGHT, height    , id));
+        String language = "german";
+        return new DTO(createSlot(MountainAtt.MOUNTAINID, id     , id),
+                createSlot(MountainAtt.MOUNTAINNAME, mountainName   , id),
+                createSlot(MountainAtt.MOUNTAINHEIGHT, height    , id),
+                createSlot(MountainAtt.LANGUAGE, language    , id));
     }
 
    /* String[] names = {"Virgil Grissom", "Edward White", "Roger Chaffee",      // Apollo 1

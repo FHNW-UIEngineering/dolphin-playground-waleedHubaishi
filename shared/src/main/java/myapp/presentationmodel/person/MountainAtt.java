@@ -8,10 +8,13 @@ import myapp.util.ValueType;
  * Created by Julien on 14.06.2017.
  */
 public enum MountainAtt implements AttributeDescription {
-    MOUNTAIN_ID(ValueType.ID),
-    MOUNTAIN_NAME(ValueType.STRING),
-    MOUNTAIN_HEIGHT(ValueType.STRING);
+    MOUNTAINID(ValueType.ID),
+    MOUNTAINNAME(ValueType.STRING),
+    MOUNTAINHEIGHT(ValueType.INT),
+    LANGUAGE(ValueType.STRING);
+
     private final ValueType valueType;
+
 
     MountainAtt(ValueType type) {
         valueType = type;
