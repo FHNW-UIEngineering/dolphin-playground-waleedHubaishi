@@ -11,8 +11,8 @@ import java.util.Random;
 public class SomeCombinedService implements SomeService, DTOMixin {
 
     String[] mountains= {
-            "0","Albis, Bürglen","916.0","Hauptgipfel","Mittelland","Albiskette","12.0","Wilerberg","376.0",
-            "Sihlbrugg Punkt 540","Albiskette vom Uetliberg"};
+            "Albis, Bürglen","Hauptgipfel","Mittelland","Albiskette","Wilerberg",
+            "Sihlbrugg Punkt","Albiskette vom Uetliberg"};
 
     @Override
     public DTO loadSomeEntity() {

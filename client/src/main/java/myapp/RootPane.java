@@ -120,7 +120,7 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         add(idField        , 1, 1, 4, 1);
         add(nameLabel      , 0, 2);
         add(nameField      , 1, 2, 4, 1);
-        add(headerLabel       , 0, 3);
+        add(heightLabel       , 0, 3);
         add(heightField       , 1, 3, 4, 1);
         add(new HBox(5, saveButton, resetButton, nextButton, germanButton, englishButton), 0, 5, 5, 1);
     }
