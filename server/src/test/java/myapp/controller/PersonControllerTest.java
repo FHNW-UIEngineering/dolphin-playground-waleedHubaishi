@@ -3,6 +3,8 @@ package myapp.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import myapp.presentationmodel.person.Mountain;
+import myapp.presentationmodel.person.MountainAtt;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendolphin.core.server.DTO;
@@ -12,8 +14,6 @@ import org.opendolphin.core.server.ServerModelStore;
 import org.opendolphin.core.server.ServerPresentationModel;
 
 import myapp.presentationmodel.PMDescription;
-import myapp.presentationmodel.person.Person;
-import myapp.presentationmodel.person.PersonAtt;
 import myapp.service.SomeService;
 import myapp.util.DTOMixin;
 
@@ -45,7 +45,7 @@ public class PersonControllerTest {
 
         //when
         controller.initializeBasePMs();
-        Person p = controller.getPersonProxy();
+        Mountain p = controller.getMountainProxy();
 
         //then
         assertNotNull(p);
@@ -56,35 +56,35 @@ public class PersonControllerTest {
     public void testDirtyState(){
         //given
         controller.initializeBasePMs();
-        Person p = controller.getPersonProxy();
-        String name = p.name.getValue();
+        Mountain p = controller.getMountainProxy();
+        String name = p.mountainName.getValue();
 
         //when
-        p.name.setValue(name + " some new value");
+        p.mountainName.setValue(name + " some new value");
 
         //then
         assertTrue(p.isDirty());
-        assertTrue(p.name.isDirty());
+        assertTrue(p.mountainName.isDirty());
     }
 
     @Test
     public void testLoadPerson(){
         //given
         controller.initializeBasePMs();
-        Person p = controller.getPersonProxy();
-        p.name.setValue("bla");
+        Mountain p = controller.getMountainProxy();
+        p.mountainName.setValue("bla");
 
         //when
-        ServerPresentationModel pm = controller.loadPerson();
+        ServerPresentationModel pm = controller.loadMountain();
 
         //then
         assertFalse(p.isDirty());
 
         //when
-        p.name.setValue("xyz");
+        p.mountainName.setValue("xyz");
 
         //then
-        assertEquals("xyz", pm.getAt(PersonAtt.NAME.name()).getValue());
+        assertEquals("xyz", pm.getAt(MountainAtt.MOUNTAINNAME.name()).getValue());
 
     }
 
@@ -92,10 +92,10 @@ public class PersonControllerTest {
     public void testSave(){
         //given
         controller.initializeBasePMs();
-        Person p = controller.getPersonProxy();
-        controller.loadPerson();
+        Mountain p = controller.getMountainProxy();
+        controller.loadMountain();
 
-        p.name.setValue("abc");
+        p.mountainName.setValue("abc");
 
         //when
         controller.save();
@@ -110,7 +110,7 @@ public class PersonControllerTest {
 
         @Override
         public DTO loadSomeEntity() {
-            return createDTO(PMDescription.PERSON);
+            return createDTO(PMDescription.MOUNTAIN);
         }
 
         @Override

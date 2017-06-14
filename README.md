@@ -57,3 +57,10 @@ Many more features are available and you may want to check out the
 - user guide (http://open-dolphin.org/download/guide/index.html), the
 - other demo sources (http://github.com/canoo/open-dolphin/tree/master/subprojects/demo-javafx), or
 - the video demos (http://www.youtube.com/user/dierkkoenig).
+
+##Team
+Waleed Al-Hubaishi
+Julien Christen
+
+##Project
+MountainView App
