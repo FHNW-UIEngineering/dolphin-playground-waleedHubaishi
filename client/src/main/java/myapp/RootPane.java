@@ -165,7 +165,7 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         add(mountainImg,5,0,3,8);
         HBox buttonBox = new HBox(10, saveButton, resetButton, nextButton, germanButton, englishButton);
         buttonBox.setId("buttonBox");
-        add(buttonBox, 0, 6, 6, 1);
+        add(buttonBox, 1, 6, 4, 1);
     }
 
     @Override

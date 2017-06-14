@@ -51,17 +51,23 @@
     -fx-font-size: 24;
     -fx-font-family: 'FontAwesome';
     -fx-text-fill: whitesmoke;
+
 }
 
 #buttonBox
 {
     -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #ff7e5f , papayawhip );
+    -fx-max-width: 900;
+    -fx-border-radius: 5 10 0 0;
+    -fx-background-radius: 5 10 0 0;
+
 }
 
 #bolder
 {
     -fx-text-fill: whitesmoke;
     -fx-font-family: 'FontAwesome';
+    -fx-font-weight: bold;
 }
 
 
