@@ -14,6 +14,7 @@ public class Mountain extends PresentationModelVeneer {
     public final LongAttributeFX mountainId      = new LongAttributeFX(getPresentationModel()   , MountainAtt.MOUNTAINID);
     public final StringAttributeFX mountainName    = new StringAttributeFX(getPresentationModel() ,MountainAtt.MOUNTAINNAME);
     public final  IntegerAttributeFX mountainHeight     = new IntegerAttributeFX(getPresentationModel(), MountainAtt.MOUNTAINHEIGHT);
+    public final  IntegerAttributeFX mountainRank     = new IntegerAttributeFX(getPresentationModel(), MountainAtt.MOUNTAINRANK);
     public final StringAttributeFX language     = new StringAttributeFX(getPresentationModel(), MountainAtt.LANGUAGE);
 
 }

@@ -23,10 +23,13 @@ public class SomeRemoteService implements SomeService, DTOMixin {
         Random r        = new Random();
         String mountainName     = mountains[r.nextInt(mountains.length)];
         int    height      = r.nextInt(43);
+        Random s        = new Random();
+        int    rank      = s.nextInt(43);
         String language = "german";
         return new DTO(createSlot(MountainAtt.MOUNTAINID, id     , id),
                 createSlot(MountainAtt.MOUNTAINNAME, mountainName   , id),
                 createSlot(MountainAtt.MOUNTAINHEIGHT, height    , id),
+                createSlot(MountainAtt.MOUNTAINRANK, rank    , id),
                 createSlot(MountainAtt.LANGUAGE, language    , id));
     }
 

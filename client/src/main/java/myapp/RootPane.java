@@ -54,6 +54,9 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
     private Label     heightLabel;
     private TextField heightField;
 
+    private Label     rankLabel;
+    private TextField rankField;
+
 
     private Button saveButton;
     private Button resetButton;
@@ -99,6 +102,9 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         heightLabel = new Label();
         heightField = new TextField();
 
+        rankLabel = new Label();
+        rankField = new TextField();
+
 
         saveButton    = new Button("Save");
         resetButton   = new Button("Reset");
@@ -122,7 +128,9 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         add(nameField      , 1, 2, 4, 1);
         add(heightLabel       , 0, 3);
         add(heightField       , 1, 3, 4, 1);
-        add(new HBox(5, saveButton, resetButton, nextButton, germanButton, englishButton), 0, 5, 5, 1);
+        add(rankLabel       , 0, 4);
+        add(rankField       , 1, 4, 4, 1);
+        add(new HBox(5, saveButton, resetButton, nextButton, germanButton, englishButton), 0, 6, 6, 1);
     }
 
     @Override
@@ -143,12 +151,17 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
     public void setupValueChangedListeners() {
         mountainProxy.mountainName.dirtyProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , DIRTY_STYLE, newValue));
         mountainProxy.mountainHeight.dirtyProperty().addListener((observable, oldValue, newValue)     -> updateStyle(heightField       , DIRTY_STYLE, newValue));
+        mountainProxy.mountainRank.dirtyProperty().addListener((observable, oldValue, newValue)     -> updateStyle(rankField       , DIRTY_STYLE, newValue));
+
 
         mountainProxy.mountainName.validProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , INVALID_STYLE, !newValue));
         mountainProxy.mountainHeight.validProperty().addListener((observable, oldValue, newValue)     -> updateStyle(heightField       , INVALID_STYLE, !newValue));
+        mountainProxy.mountainRank.validProperty().addListener((observable, oldValue, newValue)     -> updateStyle(rankField       , INVALID_STYLE, !newValue));
+
 
         mountainProxy.mountainName.mandatoryProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , MANDATORY_STYLE, newValue));
         mountainProxy.mountainHeight.mandatoryProperty().addListener((observable, oldValue, newValue)     -> updateStyle(heightField       , MANDATORY_STYLE, newValue));
+        mountainProxy.mountainRank.mandatoryProperty().addListener((observable, oldValue, newValue)     -> updateStyle(rankField       , MANDATORY_STYLE, newValue));
     }
 
     @Override
@@ -168,12 +181,18 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
                  .to("text")
                  .of(headerLabel);
 
-        JFXBinder.bind(MountainAtt.MOUNTAINHEIGHT.name())
+       /* JFXBinder.bind(MountainAtt.MOUNTAINHEIGHT.name())
                  .of(mountainProxyPM)
-                 .using(value -> mountainProxyPM.getAt(MountainAtt.MOUNTAINNAME.name()).getValue() + ", " + value)
+                 .using(value -> mountainProxyPM.getAt(MountainAtt.MOUNTAINHEIGHT.name()).getValue() + ", " + value)
                  .to("text")
                  .of(headerLabel);
 
+        JFXBinder.bind(MountainAtt.MOUNTAINRANK.name())
+                .of(mountainProxyPM)
+                .using(value -> mountainProxyPM.getAt(MountainAtt.MOUNTAINRANK.name()).getValue() + ", " + value)
+                .to("text")
+                .of(rankLabel);
+*/
         JFXBinder.bind(MountainAtt.MOUNTAINNAME.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(nameLabel);
         JFXBinder.bind(MountainAtt.MOUNTAINNAME.name()).of(mountainProxyPM).to("text").of(nameField);
         JFXBinder.bind("text").of(nameField).to(MountainAtt.MOUNTAINNAME.name()).of(mountainProxyPM);
@@ -195,6 +214,25 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         };
         JFXBinder.bind("text").of(heightField).using(toIntConverter).to(MountainAtt.MOUNTAINHEIGHT.name()).of(mountainProxyPM);
 
+
+        JFXBinder.bind(MountainAtt.MOUNTAINRANK.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(rankLabel);
+        JFXBinder.bind(MountainAtt.MOUNTAINRANK.name()).of(mountainProxyPM).to("text").of(rankField);
+        Converter toIntConverter2 = value -> {
+            try {
+                int newValue = Integer.parseInt(value.toString());
+                mountainProxyPM.getAt(MountainAtt.MOUNTAINRANK.name(), AdditionalTag.VALID).setValue(true);
+                mountainProxyPM.getAt(MountainAtt.MOUNTAINRANK.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("OK");
+
+                return newValue;
+            } catch (NumberFormatException e) {
+                mountainProxyPM.getAt(MountainAtt.MOUNTAINRANK.name(), AdditionalTag.VALID).setValue(false);
+                mountainProxyPM.getAt(MountainAtt.MOUNTAINRANK.name(), AdditionalTag.VALIDATION_MESSAGE).setValue("Not a number");
+                return mountainProxyPM.getAt(MountainAtt.MOUNTAINRANK.name()).getValue();
+            }
+        };
+        JFXBinder.bind("text").of(rankField).using(toIntConverter2).to(MountainAtt.MOUNTAINRANK.name()).of(mountainProxyPM);
+
+
         Converter not = value -> !(boolean) value;
         JFXBinder.bindInfo(Attribute.DIRTY_PROPERTY).of(mountainProxyPM).using(not).to("disable").of(saveButton);
         JFXBinder.bindInfo(Attribute.DIRTY_PROPERTY).of(mountainProxyPM).using(not).to("disable").of(resetButton);
@@ -213,6 +251,8 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
 
         setupBinding(nameLabel   , nameField      , mountainProxy.mountainName);
         setupBinding(heightLabel    , heightField       , mountainProxy.mountainHeight);
+        setupBinding(rankLabel    , rankField       , mountainProxy.mountainRank);
+
 
         germanButton.disableProperty().bind(Bindings.createBooleanBinding(() -> Language.GERMAN.equals(ps.language.getValue()), ps.language.valueProperty()));
         englishButton.disableProperty().bind(Bindings.createBooleanBinding(() -> Language.ENGLISH.equals(ps.language.getValue()), ps.language.valueProperty()));

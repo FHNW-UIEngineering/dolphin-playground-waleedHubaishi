@@ -11,8 +11,8 @@
 .heading {
     -fx-font-family: 'Lato Light';
     -fx-font-size: 72;
-    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, rgb(33, 33, 33) 0%, rgb(66, 66, 66) 100%);
-    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, rgb(65, 76, 23) 0%, rgb(43, 65, 76) 100%);
+    -fx-text-fill: blanchedalmond;
     -fx-max-height: 1024;
     -fx-max-width: 1024;
 }

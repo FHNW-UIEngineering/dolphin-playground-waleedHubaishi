@@ -11,6 +11,7 @@ public enum MountainAtt implements AttributeDescription {
     MOUNTAINID(ValueType.ID),
     MOUNTAINNAME(ValueType.STRING),
     MOUNTAINHEIGHT(ValueType.INT),
+    MOUNTAINRANK(ValueType.INT),
     LANGUAGE(ValueType.STRING);
 
     private final ValueType valueType;
