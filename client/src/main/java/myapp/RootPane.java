@@ -3,10 +3,13 @@ package myapp;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.shape.Rectangle;
 import myapp.presentationmodel.BasePmMixin;
 import myapp.presentationmodel.person.Mountain;
 import myapp.presentationmodel.person.MountainAtt;
@@ -57,6 +60,12 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
     private Label     rankLabel;
     private TextField rankField;
 
+    Image mountainImageName;
+    ImageView mountainImg;
+    final Rectangle clip = new Rectangle(180, 480);
+
+
+
 
     private Button saveButton;
     private Button resetButton;
@@ -106,6 +115,20 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         rankField = new TextField();
 
 
+
+        mountainImageName = new Image("/0.jpg");
+
+        mountainImg = new ImageView();
+        mountainImg.setClip(clip);
+
+        mountainImg.setImage(mountainImageName);
+
+
+        mountainImg.setFitHeight(160.0);
+        mountainImg.setFitWidth(160.0);
+
+
+
         saveButton    = new Button("Save");
         resetButton   = new Button("Reset");
         nextButton    = new Button("Next");
@@ -130,6 +153,7 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         add(heightField       , 1, 3, 4, 1);
         add(rankLabel       , 0, 4);
         add(rankField       , 1, 4, 4, 1);
+        add(mountainImg,5,0,3,10);
         add(new HBox(5, saveButton, resetButton, nextButton, germanButton, englishButton), 0, 6, 6, 1);
     }
 
@@ -162,6 +186,8 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         mountainProxy.mountainName.mandatoryProperty().addListener((observable, oldValue, newValue)    -> updateStyle(nameField      , MANDATORY_STYLE, newValue));
         mountainProxy.mountainHeight.mandatoryProperty().addListener((observable, oldValue, newValue)     -> updateStyle(heightField       , MANDATORY_STYLE, newValue));
         mountainProxy.mountainRank.mandatoryProperty().addListener((observable, oldValue, newValue)     -> updateStyle(rankField       , MANDATORY_STYLE, newValue));
+
+
     }
 
     @Override
@@ -214,7 +240,6 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         };
         JFXBinder.bind("text").of(heightField).using(toIntConverter).to(MountainAtt.MOUNTAINHEIGHT.name()).of(mountainProxyPM);
 
-
         JFXBinder.bind(MountainAtt.MOUNTAINRANK.name(), Tag.LABEL).of(mountainProxyPM).to("text").of(rankLabel);
         JFXBinder.bind(MountainAtt.MOUNTAINRANK.name()).of(mountainProxyPM).to("text").of(rankField);
         Converter toIntConverter2 = value -> {
@@ -231,7 +256,6 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
             }
         };
         JFXBinder.bind("text").of(rankField).using(toIntConverter2).to(MountainAtt.MOUNTAINRANK.name()).of(mountainProxyPM);
-
 
         Converter not = value -> !(boolean) value;
         JFXBinder.bindInfo(Attribute.DIRTY_PROPERTY).of(mountainProxyPM).using(not).to("disable").of(saveButton);
@@ -253,7 +277,6 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         setupBinding(heightLabel    , heightField       , mountainProxy.mountainHeight);
         setupBinding(rankLabel    , rankField       , mountainProxy.mountainRank);
 
-
         germanButton.disableProperty().bind(Bindings.createBooleanBinding(() -> Language.GERMAN.equals(ps.language.getValue()), ps.language.valueProperty()));
         englishButton.disableProperty().bind(Bindings.createBooleanBinding(() -> Language.ENGLISH.equals(ps.language.getValue()), ps.language.valueProperty()));
 
@@ -273,12 +296,14 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
     private void setupBinding(Label label, CheckBox checkBox, BooleanAttributeFX attribute) {
         setupBinding(label, attribute);
         checkBox.selectedProperty().bindBidirectional(attribute.valueProperty());
+
     }
 
     private void setupBinding(Label label, AttributeFX attribute){
         label.textProperty().bind(Bindings.createStringBinding(() -> attribute.getLabel() + (attribute.isMandatory() ? " *" : "  "),
                                                                attribute.labelProperty(),
                                                                attribute.mandatoryProperty()));
+
     }
 
     private void updateStyle(Node node, String style, boolean value){

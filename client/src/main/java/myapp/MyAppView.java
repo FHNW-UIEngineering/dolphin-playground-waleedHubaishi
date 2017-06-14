@@ -2,6 +2,7 @@ package myapp;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -30,6 +31,11 @@ public class MyAppView extends Application implements BasePmMixin {
     private void buildUI(Stage stage) {
         Pane root   = new RootPane(clientDolphin);
         Scene scene = new Scene(root);
+
+        stage.setTitle("Swiss Mountains");
+        Image icon = new Image(getClass().getResourceAsStream("/CH.png"));
+        stage.getIcons().add(icon);
+        stage.setScene(scene);
 
         stage.setScene(scene);
         stage.titleProperty().bind(getApplicationState().applicationTitle.labelProperty());
