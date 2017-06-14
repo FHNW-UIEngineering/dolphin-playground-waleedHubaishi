@@ -9,7 +9,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 import myapp.presentationmodel.BasePmMixin;
 import myapp.presentationmodel.person.Mountain;
 import myapp.presentationmodel.person.MountainAtt;
@@ -62,7 +62,7 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
 
     Image mountainImageName;
     ImageView mountainImg;
-    final Rectangle clip = new Rectangle(180, 480);
+    final Circle clip = new Circle(80, 80,80);
 
 
 
@@ -141,6 +141,15 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         ColumnConstraints grow = new ColumnConstraints();
         grow.setHgrow(Priority.ALWAYS);
 
+
+        idField.setId("idField");
+
+        idLabel.setId("bolder");
+        nameLabel.setId("bolder");
+        heightLabel.setId("bolder");
+        rankLabel.setId("bolder");
+
+
         getColumnConstraints().setAll(new ColumnConstraints(), grow);
         setVgrow(headerLabel, Priority.ALWAYS);
 
@@ -153,8 +162,10 @@ class RootPane extends GridPane implements ViewMixin, BasePmMixin {
         add(heightField       , 1, 3, 4, 1);
         add(rankLabel       , 0, 4);
         add(rankField       , 1, 4, 4, 1);
-        add(mountainImg,5,0,3,10);
-        add(new HBox(5, saveButton, resetButton, nextButton, germanButton, englishButton), 0, 6, 6, 1);
+        add(mountainImg,5,0,3,8);
+        HBox buttonBox = new HBox(10, saveButton, resetButton, nextButton, germanButton, englishButton);
+        buttonBox.setId("buttonBox");
+        add(buttonBox, 0, 6, 6, 1);
     }
 
     @Override

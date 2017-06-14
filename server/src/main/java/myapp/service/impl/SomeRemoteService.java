@@ -22,7 +22,7 @@ public class SomeRemoteService implements SomeService, DTOMixin {
         long id = createNewId();
         Random r        = new Random();
         String mountainName     = mountains[r.nextInt(mountains.length)];
-        int    height      = r.nextInt(43);
+        int    height      = r.nextInt(12000);
         Random s        = new Random();
         int    rank      = s.nextInt(43);
         String language = "german";

@@ -30,7 +30,7 @@ public class MyAppView extends Application implements BasePmMixin {
 
     private void buildUI(Stage stage) {
         Pane root   = new RootPane(clientDolphin);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 1150,300);
 
         stage.setTitle("Swiss Mountains");
         Image icon = new Image(getClass().getResourceAsStream("/CH.png"));

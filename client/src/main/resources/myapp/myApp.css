@@ -1,5 +1,6 @@
 .root {
-    -fx-background-color: linear-gradient(to bottom, transparent 30%, rgba(0, 0, 0, 0.15) 100%);
+    -fx-base : lightcoral;
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #EF3B36 , papayawhip );
 }
 
 .rootPane {
@@ -9,10 +10,10 @@
 }
 
 .heading {
-    -fx-font-family: 'Lato Light';
+    -fx-font-family: 'Helvetica Neue';
     -fx-font-size: 72;
-    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, rgb(65, 76, 23) 0%, rgb(43, 65, 76) 100%);
-    -fx-text-fill: blanchedalmond;
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #papayawhip , floralwhite );
+    -fx-text-fill: navajowhite;
     -fx-max-height: 1024;
     -fx-max-width: 1024;
 }
@@ -44,3 +45,24 @@
     -fx-font-family: 'FontAwesome';
     -fx-font-size: 24;
 }
+
+#idField
+{
+    -fx-font-size: 24;
+    -fx-font-family: 'FontAwesome';
+    -fx-text-fill: whitesmoke;
+}
+
+#buttonBox
+{
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #ff7e5f , papayawhip );
+}
+
+#bolder
+{
+    -fx-text-fill: whitesmoke;
+    -fx-font-family: 'FontAwesome';
+}
+
+
+
